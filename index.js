@@ -1,11 +1,13 @@
 function handleFormSubmit(event){
     event.preventDefault()
+    count=count+1;
     const blog = {
         Url: event.target.image.value,
         Title: event.target.title.value,
         Description: event.target.description.value,
+        Count: count,
     }
-    axios.post("https://crudcrud.com/api/342e78157082487a8917dd0e76d3958f/blogs",blog)
+    axios.post("https://crudcrud.com/api/0d5c6faf48e64a94845817f36558132b/blogs",blog)
     .then((response) => {
         showBlogOnScreen(response.data);
     }).catch((error) => {
@@ -17,12 +19,11 @@ function handleFormSubmit(event){
     document.getElementById('title').value= "";
     document.getElementById('description').value ="";
 
-    count=count+1;
     showNewCount(count);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    axios.get("https://crudcrud.com/api/342e78157082487a8917dd0e76d3958f/blogs")
+    axios.get("https://crudcrud.com/api/0d5c6faf48e64a94845817f36558132b/blogs")
     .then((response) => {
         for(let i=0; i< response.data.length; i++)
         {
@@ -52,7 +53,7 @@ function showBlogOnScreen(blog){
 
     deleteBtn.addEventListener("click", function (event) {
         item.removeChild(event.target.parentElement);
-        axios.delete(`https://crudcrud.com/api/342e78157082487a8917dd0e76d3958f/blogs/${blog._id}`)
+        axios.delete(`https://crudcrud.com/api/0d5c6faf48e64a94845817f36558132b/blogs/${blog._id}`)
         count--;
         showNewCount(count);
         
@@ -60,7 +61,7 @@ function showBlogOnScreen(blog){
 
     editBtn.addEventListener("click", function (event) {
         item.removeChild(event.target.parentElement);
-        axios.delete(`https://crudcrud.com/api/342e78157082487a8917dd0e76d3958f/blogs/${blog._id}`)
+        axios.delete(`https://crudcrud.com/api/0d5c6faf48e64a94845817f36558132b/blogs/${blog._id}`)
         document.getElementById('image').value = blog.Url;
         document.getElementById('title').value = blog.Title;
         document.getElementById('description').value = blog.Description;
@@ -75,7 +76,7 @@ const newCount=document.createTextNode(count);
 blogCount.appendChild(newCount);
 
 function showNewCount(c) {
-    blogCount.removeChild(newCount)
+   blogCount.removeChild(blogCount.lastChild);
     blogCount.appendChild(document.createTextNode(c));
 
 }
